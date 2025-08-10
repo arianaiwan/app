@@ -344,7 +344,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
       </div>
     </div>
   </div>
-`}}pr.id="4baec631bb";pr.style=`
+`}}pr.id="cced0658a4";pr.style=`
   /* Hilangkan efek abu-abu saat tap di iPhone */
   html,
   body {
@@ -479,7 +479,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
     </div>
   </div>
 </div>
-`}}rn.id="fb25d6a359";function sn(r,{$f7route:e,$store:a}){const t=a.getters.products,s=e.params.id;let n;return t.value.forEach(i=>{i.id===s&&(n=i)}),function(i){var l=i.$,o=i.$h,c=i.$root,d=i.$f7,p=i.$f7route,u=i.$f7router,f=i.$theme,h=i.$update,m=i.$store;return o`
+`}}rn.id="ffe4298136";function sn(r,{$f7route:e,$store:a}){const t=a.getters.products,s=e.params.id;let n;return t.value.forEach(i=>{i.id===s&&(n=i)}),function(i){var l=i.$,o=i.$h,c=i.$root,d=i.$f7,p=i.$f7route,u=i.$f7router,f=i.$theme,h=i.$update,m=i.$store;return o`
   <div class="page" data-name="product">
     <div class="navbar">
       <div class="navbar-bg"></div>
@@ -500,7 +500,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
       </div>
     </div>
   </div>
-`}}sn.id="95b9f7bf93";function nn(){return function(r){var e=r.$,a=r.$h,t=r.$root,s=r.$f7,n=r.$f7route,i=r.$f7router,l=r.$theme,o=r.$update,c=r.$store;return a`
+`}}sn.id="ff62e178fd";function nn(){return function(r){var e=r.$,a=r.$h,t=r.$root,s=r.$f7,n=r.$f7route,i=r.$f7router,l=r.$theme,o=r.$update,c=r.$store;return a`
 <div class="page" data-name="settings">
   <div class="navbar">
     <div class="navbar-bg"></div>
@@ -735,7 +735,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
     </div>
   </div>
 </div>
-`}}nn.id="adb2ad4071";function on(){return function(r){var e=r.$,a=r.$h,t=r.$root,s=r.$f7,n=r.$f7route,i=r.$f7router,l=r.$theme,o=r.$update,c=r.$store;return a`
+`}}nn.id="c8b69f2170";function on(){return function(r){var e=r.$,a=r.$h,t=r.$root,s=r.$f7,n=r.$f7route,i=r.$f7router,l=r.$theme,o=r.$update,c=r.$store;return a`
 <div class="page">
   <div class="navbar">
     <div class="navbar-bg"></div>
@@ -756,7 +756,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
     </div>
   </div>
 </div>
-`}}on.id="1be98336c1";function ur(r,{$f7:e,$on:a,$f7route:t,$app:s}){const n=t.params.id;let i={},l={};return a("page:init",()=>{console.log("👉 page:init → Halaman Home telah tampil"+n),fetch("https:blockchord.my.id/mobile-api/lirik").then(o=>o.json()).then(o=>{const d=o.data.find(u=>u.id==n);console.log(d),i=d;const p={id:d.id,judul:d.judul,artis:d.artis};if(mu(p),console.log("Test ID Recent",p),d){console.log(d);const u=document.getElementById("detail-lirik");u.innerHTML=`
+`}}on.id="871f4c1eed";function ur(r,{$f7:e,$on:a,$f7route:t,$app:s}){const n=t.params.id;let i={},l={};return a("page:init",()=>{console.log("👉 page:init → Halaman Home telah tampil"+n),fetch("https://blockchord.my.id/mobile-api/lirik").then(o=>o.json()).then(o=>{const d=o.data.find(u=>u.id==n);console.log(d),i=d;const p={id:d.id,judul:d.judul,artis:d.artis};if(mu(p),console.log("Test ID Recent",p),d){console.log(d);const u=document.getElementById("detail-lirik");u.innerHTML=`
             <h3>${d.artis} - ${d.judul} Chord Mudah</h3><br>
               <pre>
               ${d.lirik}
@@ -819,7 +819,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
 
 
   </div>
-`}}ur.id="90b9bc08a6";ur.style=`
+`}}ur.id="3d0a14b2ee";ur.style=`
   #contentku {
     max-height: calc(100vh - 150px);
     /* cukup ruang untuk navbar dan FAB */
@@ -879,7 +879,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
             </div>
         </div>
     </div>
-`}}ln.id="1ce3a2f52d";function cn(r,{$on:e}){const a=document.getElementById("view-catalog");return e("page:init",()=>{a.addEventListener("tab:show",async()=>{console.log("📌 Tab 2 aktif");const t=await gu();console.log("🔁 Recent view:",t);const s=document.getElementById("daftar-recent");s.innerHTML=t.map(n=>`        <li>
+`}}ln.id="ba976a705d";function cn(r,{$on:e}){const a=document.getElementById("view-catalog");return e("page:init",()=>{a.addEventListener("tab:show",async()=>{console.log("📌 Tab 2 aktif");const t=await gu();console.log("🔁 Recent view:",t);const s=document.getElementById("daftar-recent");s.innerHTML=t.map(n=>`        <li>
           <a class="item-link item-content" href="/detail/${n.id}/" >
             <div class="item-media"><i class="icon icon-f7"></i></div>
             <div class="item-inner">
@@ -907,7 +907,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
 
     </div>
   </div>
-`}}cn.id="26e313e98e";var yu=[{path:"/",component:pr},{path:"/detail/:id/",component:ur},{path:"/katalog-lagu/:artis/",component:ln},{path:"/about/",component:rn},{path:"/product/:id/",component:sn},{path:"/settings/",component:nn},{path:"/favorite/",component:cn},{path:"(.*)",component:on}];Xe.use([Os]);ze.use([$s,Cs,ks,xs,Ts,Is,ir,Fs,Hs,zs,Vs,Ns,qs,js,Ys,Ws,Xs,_s]);const Eu=Ga({state:{products:[{id:"1",title:"Apple iPhone 8",description:"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis."},{id:"2",title:"Apple iPhone 8 Plus",description:"Velit odit autem modi saepe ratione totam minus, aperiam, labore quia provident temporibus quasi est ut aliquid blanditiis beatae suscipit odio vel! Nostrum porro sunt sint eveniet maiores, dolorem itaque!"},{id:"3",title:"Apple iPhone X",description:"Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum."}]},getters:{products({state:r}){return r.products}},actions:{addProduct({state:r},e){r.products=[...r.products,e]}}});function dn(r,{$f7:e,$on:a,$update:t}){a("page:init",()=>{});let s="",n="";const i=c=>{s=c.target.value,t()},l=c=>{n=c.target.value,t()},o=()=>{e.dialog.alert("Username: "+s+"<br/>Password: "+n,()=>{e.loginScreen.close()})};return function(c){var d=c.$,p=c.$h,u=c.$root,f=c.$f7,h=c.$f7route,m=c.$f7router,v=c.$theme,b=c.$update,g=c.$store;return p`
+`}}cn.id="847f688865";var yu=[{path:"/",component:pr},{path:"/detail/:id/",component:ur},{path:"/katalog-lagu/:artis/",component:ln},{path:"/about/",component:rn},{path:"/product/:id/",component:sn},{path:"/settings/",component:nn},{path:"/favorite/",component:cn},{path:"(.*)",component:on}];Xe.use([Os]);ze.use([$s,Cs,ks,xs,Ts,Is,ir,Fs,Hs,zs,Vs,Ns,qs,js,Ys,Ws,Xs,_s]);const Eu=Ga({state:{products:[{id:"1",title:"Apple iPhone 8",description:"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis."},{id:"2",title:"Apple iPhone 8 Plus",description:"Velit odit autem modi saepe ratione totam minus, aperiam, labore quia provident temporibus quasi est ut aliquid blanditiis beatae suscipit odio vel! Nostrum porro sunt sint eveniet maiores, dolorem itaque!"},{id:"3",title:"Apple iPhone X",description:"Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum."}]},getters:{products({state:r}){return r.products}},actions:{addProduct({state:r},e){r.products=[...r.products,e]}}});function dn(r,{$f7:e,$on:a,$update:t}){a("page:init",()=>{});let s="",n="";const i=c=>{s=c.target.value,t()},l=c=>{n=c.target.value,t()},o=()=>{e.dialog.alert("Username: "+s+"<br/>Password: "+n,()=>{e.loginScreen.close()})};return function(c){var d=c.$,p=c.$h,u=c.$root,f=c.$f7,h=c.$f7route,m=c.$f7router,v=c.$theme,b=c.$update,g=c.$store;return p`
   <div id="app">
 
     <!-- Left panel with cover effect-->
@@ -1051,4 +1051,4 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
     </div>
 
   </div>
-`}}dn.id="e18b027e82";var tf=new ze({name:"BlockChord",theme:"auto",el:"#app",component:dn,store:Eu,routes:yu});
+`}}dn.id="ca7d416c32";var tf=new ze({name:"BlockChord",theme:"auto",el:"#app",component:dn,store:Eu,routes:yu});
