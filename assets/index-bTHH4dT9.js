@@ -290,42 +290,44 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
           <div class="block">
             <swiper-container pagination class="demo-swiper-multiple" space-between="10" slides-per-view="3">
               <swiper-slide>
-                <img src="../assets/img/st12.jpg" alt="ST12" style="width: 100%; border-radius: 8px;" />
+                <img src="https://blockchord.my.id/assets/img/st12.jpg" alt="ST12"
+                  style="width: 100%; border-radius: 8px;" />
 
               </swiper-slide>
               <swiper-slide>
-                <img src="../assets/img/shaggydog.jpg" alt="shaggydog" style="width: 100%; border-radius: 8px;" />
+                <img src="https://blockchord.my.id/assets/img/shaggydog.jpg" alt="shaggydog"
+                  style="width: 100%; border-radius: 8px;" />
 
               </swiper-slide>
               <swiper-slide>
-                <img src="../assets/img/sid.jpg" alt="sid" style="width: 100%; border-radius: 8px;" />
+                <img src="https://blockchord.my.id/assets/img/sid.jpg" alt="sid"
+                  style="width: 100%; border-radius: 8px;" />
 
               </swiper-slide>
               <swiper-slide>
-                <img src="../assets/img/armada.jpg" alt="armada" style="width: 100%; border-radius: 8px;" />
+                <img src="https://blockchord.my.id/assets/img/armada.jpg" alt="armada"
+                  style="width: 100%; border-radius: 8px;" />
 
               </swiper-slide>
               <swiper-slide>
-                <img src="../assets/img/dewa19.jpg" alt="dewa19" style="width: 100%; border-radius: 8px;" />
+                <img src="https://blockchord.my.id/assets/img/dewa19.jpg" alt="dewa19"
+                  style="width: 100%; border-radius: 8px;" />
 
               </swiper-slide>
             </swiper-container>
 
             <div class="block-title">List Artis Yang Band</div>
-
-            <div class="list links-list list-outline-ios list-strong-ios list-dividers-ios">
+            <div class="list list-outline-ios list-strong-ios list-dividers-ios">
               <ul id="artis"></ul>
             </div>
-            <!-- daftar artis -->
-            <div class="list list-strong inset searchbar-found">
-              <ul id="artiss" class="search-list"></ul>
-              <div class="block searchbar-not-found">Tidak ditemukan</div>
-            </div>
             <!-- daftar lirik -->
-            <div class="list list-strong inset searchbar-found">
-              <ul id="disini" class="search-list"></ul>
-              <div class="block searchbar-not-found">Tidak ditemukan</div>
+            <div class="block-title">List Lagu Terbaru </div>
+            <div class="list list-outline-ios list-strong-ios list-dividers-ios">
+              <ul id="disini"></ul>
             </div>
+
+
+
           </div>
         </div>
       </div>
@@ -344,7 +346,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
       </div>
     </div>
   </div>
-`}}pr.id="1b96a39ba3";pr.style=`
+`}}pr.id="07ca58bd89";pr.style=`
   /* Hilangkan efek abu-abu saat tap di iPhone */
   html,
   body {
@@ -436,7 +438,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
   }
 `;async function vu(){const e=await(await fetch("https://blockchord.my.id/mobile-api/songbook")).json(),a=document.getElementById("song-book");a.innerHTML=e.data.map(t=>`
             <div class="item">
-              <div class="ph"><img src="../img/${t.img}"/></div>
+              <div class="ph"><img src="https://blockchord.my.id/assets/img/${t.img}"/></div>
               <div class="info">
                 <!-- Kolom 2 -->
                 <div class="judul">${t.judul}</div>
@@ -444,13 +446,25 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
               </div>
             </div>
   `).join("")}async function bu(){const e=await(await fetch("https://blockchord.my.id/mobile-api/lirik")).json(),a=document.getElementById("disini");a.innerHTML=e.data.map(t=>`
-    <li>
-      <a class="item-content item-link" href="/detail/${t.id}/">
-        <div class="item-media"><i class="icon icon-f7"></i></div>
-        <div class="item-inner"><div class="item-title">${t.judul}</div></div>
-      </a>
-    </li>
-  `).join("")}async function wu(){fetch("https://blockchord.my.id/mobile-api/artis").then(r=>r.json()).then(r=>{const e=document.getElementById("artis");e.innerHTML=r.data.map(a=>`  <li><a  href="/katalog-lagu/${a.artis}/">${a.artis}</a></li>`).join("")}).catch(r=>console.error("❌ Gagal ambil data artis:",r))}function rn(){return function(r){var e=r.$,a=r.$h,t=r.$root,s=r.$f7,n=r.$f7route,i=r.$f7router,l=r.$theme,o=r.$update,c=r.$store;return a`
+     <li>
+          <a class="item-link item-content" href="/detail/${t.id}/" >
+            <div class="item-media"><i class="icon icon-f7"></i></div>
+            <div class="item-inner">
+             <div class="item-title">${t.judul}</div>
+              <div class="item-after">${t.artis}</div>
+            </div>
+          </a>
+        </li>
+  `).join("")}async function wu(){fetch("https://blockchord.my.id/mobile-api/artis").then(r=>r.json()).then(r=>{const e=document.getElementById("artis");e.innerHTML=r.data.map(a=>`  
+             <li>
+          <a class="item-link item-content" href="/katalog-lagu/${a.artis}/" >
+            <div class="item-media"><i class="icon icon-f7"></i></div>
+            <div class="item-inner">
+             <div class="item-title">${a.artis}</div>
+              <div class="item-after"></div>
+            </div>
+          </a>
+        </li>`).join("")}).catch(r=>console.error("❌ Gagal ambil data artis:",r))}function rn(){return function(r){var e=r.$,a=r.$h,t=r.$root,s=r.$f7,n=r.$f7route,i=r.$f7router,l=r.$theme,o=r.$update,c=r.$store;return a`
 <div class="page" data-name="about">
   <div class="navbar">
     <div class="navbar-bg"></div>
@@ -479,7 +493,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
     </div>
   </div>
 </div>
-`}}rn.id="9d70ca7a1b";function sn(r,{$f7route:e,$store:a}){const t=a.getters.products,s=e.params.id;let n;return t.value.forEach(i=>{i.id===s&&(n=i)}),function(i){var l=i.$,o=i.$h,c=i.$root,d=i.$f7,p=i.$f7route,u=i.$f7router,f=i.$theme,h=i.$update,m=i.$store;return o`
+`}}rn.id="9c0f4e0448";function sn(r,{$f7route:e,$store:a}){const t=a.getters.products,s=e.params.id;let n;return t.value.forEach(i=>{i.id===s&&(n=i)}),function(i){var l=i.$,o=i.$h,c=i.$root,d=i.$f7,p=i.$f7route,u=i.$f7router,f=i.$theme,h=i.$update,m=i.$store;return o`
   <div class="page" data-name="product">
     <div class="navbar">
       <div class="navbar-bg"></div>
@@ -500,7 +514,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
       </div>
     </div>
   </div>
-`}}sn.id="c4f5300a4f";function nn(){return function(r){var e=r.$,a=r.$h,t=r.$root,s=r.$f7,n=r.$f7route,i=r.$f7router,l=r.$theme,o=r.$update,c=r.$store;return a`
+`}}sn.id="62b0c7a2aa";function nn(){return function(r){var e=r.$,a=r.$h,t=r.$root,s=r.$f7,n=r.$f7route,i=r.$f7router,l=r.$theme,o=r.$update,c=r.$store;return a`
 <div class="page" data-name="settings">
   <div class="navbar">
     <div class="navbar-bg"></div>
@@ -735,7 +749,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
     </div>
   </div>
 </div>
-`}}nn.id="7f8f44bf43";function on(){return function(r){var e=r.$,a=r.$h,t=r.$root,s=r.$f7,n=r.$f7route,i=r.$f7router,l=r.$theme,o=r.$update,c=r.$store;return a`
+`}}nn.id="834f0f5507";function on(){return function(r){var e=r.$,a=r.$h,t=r.$root,s=r.$f7,n=r.$f7route,i=r.$f7router,l=r.$theme,o=r.$update,c=r.$store;return a`
 <div class="page">
   <div class="navbar">
     <div class="navbar-bg"></div>
@@ -756,7 +770,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
     </div>
   </div>
 </div>
-`}}on.id="b242206d4a";function ur(r,{$f7:e,$on:a,$f7route:t,$app:s}){const n=t.params.id;let i={},l={};return a("page:init",()=>{console.log("👉 page:init → Halaman Home telah tampil"+n),fetch("https://blockchord.my.id/mobile-api/lirik").then(o=>o.json()).then(o=>{const d=o.data.find(u=>u.id==n);console.log(d),i=d;const p={id:d.id,judul:d.judul,artis:d.artis};if(mu(p),console.log("Test ID Recent",p),d){console.log(d);const u=document.getElementById("detail-lirik");u.innerHTML=`
+`}}on.id="7e5f1323e4";function ur(r,{$f7:e,$on:a,$f7route:t,$app:s}){const n=t.params.id;let i={},l={};return a("page:init",()=>{console.log("👉 page:init → Halaman Home telah tampil"+n),fetch("https://blockchord.my.id/mobile-api/lirik").then(o=>o.json()).then(o=>{const d=o.data.find(u=>u.id==n);console.log(d),i=d;const p={id:d.id,judul:d.judul,artis:d.artis};if(mu(p),console.log("Test ID Recent",p),d){console.log(d);const u=document.getElementById("detail-lirik");u.innerHTML=`
             <h3>${d.artis} - ${d.judul} Chord Mudah</h3><br>
               <pre>
               ${d.lirik}
@@ -819,7 +833,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
 
 
   </div>
-`}}ur.id="0759ad1300";ur.style=`
+`}}ur.id="6d69d78cba";ur.style=`
   #contentku {
     max-height: calc(100vh - 150px);
     /* cukup ruang untuk navbar dan FAB */
@@ -879,7 +893,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
             </div>
         </div>
     </div>
-`}}ln.id="245c16a370";function cn(r,{$on:e}){const a=document.getElementById("view-catalog");return e("page:init",()=>{a.addEventListener("tab:show",async()=>{console.log("📌 Tab 2 aktif");const t=await gu();console.log("🔁 Recent view:",t);const s=document.getElementById("daftar-recent");s.innerHTML=t.map(n=>`        <li>
+`}}ln.id="380f92c4f7";function cn(r,{$on:e}){const a=document.getElementById("view-catalog");return e("page:init",()=>{a.addEventListener("tab:show",async()=>{console.log("📌 Tab 2 aktif");const t=await gu();console.log("🔁 Recent view:",t);const s=document.getElementById("daftar-recent");s.innerHTML=t.map(n=>`        <li>
           <a class="item-link item-content" href="/detail/${n.id}/" >
             <div class="item-media"><i class="icon icon-f7"></i></div>
             <div class="item-inner">
@@ -907,7 +921,7 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
 
     </div>
   </div>
-`}}cn.id="7c0a02009a";var yu=[{path:"/",component:pr},{path:"/detail/:id/",component:ur},{path:"/katalog-lagu/:artis/",component:ln},{path:"/about/",component:rn},{path:"/product/:id/",component:sn},{path:"/settings/",component:nn},{path:"/favorite/",component:cn},{path:"(.*)",component:on}];Xe.use([Os]);ze.use([$s,Cs,ks,xs,Ts,Is,ir,Fs,Hs,zs,Vs,Ns,qs,js,Ys,Ws,Xs,_s]);const Eu=Ga({state:{products:[{id:"1",title:"Apple iPhone 8",description:"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis."},{id:"2",title:"Apple iPhone 8 Plus",description:"Velit odit autem modi saepe ratione totam minus, aperiam, labore quia provident temporibus quasi est ut aliquid blanditiis beatae suscipit odio vel! Nostrum porro sunt sint eveniet maiores, dolorem itaque!"},{id:"3",title:"Apple iPhone X",description:"Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum."}]},getters:{products({state:r}){return r.products}},actions:{addProduct({state:r},e){r.products=[...r.products,e]}}});function dn(r,{$f7:e,$on:a,$update:t}){a("page:init",()=>{});let s="",n="";const i=c=>{s=c.target.value,t()},l=c=>{n=c.target.value,t()},o=()=>{e.dialog.alert("Username: "+s+"<br/>Password: "+n,()=>{e.loginScreen.close()})};return function(c){var d=c.$,p=c.$h,u=c.$root,f=c.$f7,h=c.$f7route,m=c.$f7router,v=c.$theme,b=c.$update,g=c.$store;return p`
+`}}cn.id="18c62564c5";var yu=[{path:"/",component:pr},{path:"/detail/:id/",component:ur},{path:"/katalog-lagu/:artis/",component:ln},{path:"/about/",component:rn},{path:"/product/:id/",component:sn},{path:"/settings/",component:nn},{path:"/favorite/",component:cn},{path:"(.*)",component:on}];Xe.use([Os]);ze.use([$s,Cs,ks,xs,Ts,Is,ir,Fs,Hs,zs,Vs,Ns,qs,js,Ys,Ws,Xs,_s]);const Eu=Ga({state:{products:[{id:"1",title:"Apple iPhone 8",description:"Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi tempora similique reiciendis, error nesciunt vero, blanditiis pariatur dolor, minima sed sapiente rerum, dolorem corrupti hic modi praesentium unde saepe perspiciatis."},{id:"2",title:"Apple iPhone 8 Plus",description:"Velit odit autem modi saepe ratione totam minus, aperiam, labore quia provident temporibus quasi est ut aliquid blanditiis beatae suscipit odio vel! Nostrum porro sunt sint eveniet maiores, dolorem itaque!"},{id:"3",title:"Apple iPhone X",description:"Expedita sequi perferendis quod illum pariatur aliquam, alias laboriosam! Vero blanditiis placeat, mollitia necessitatibus reprehenderit. Labore dolores amet quos, accusamus earum asperiores officiis assumenda optio architecto quia neque, quae eum."}]},getters:{products({state:r}){return r.products}},actions:{addProduct({state:r},e){r.products=[...r.products,e]}}});function dn(r,{$f7:e,$on:a,$update:t}){a("page:init",()=>{});let s="",n="";const i=c=>{s=c.target.value,t()},l=c=>{n=c.target.value,t()},o=()=>{e.dialog.alert("Username: "+s+"<br/>Password: "+n,()=>{e.loginScreen.close()})};return function(c){var d=c.$,p=c.$h,u=c.$root,f=c.$f7,h=c.$f7route,m=c.$f7router,v=c.$theme,b=c.$update,g=c.$store;return p`
   <div id="app">
 
     <!-- Left panel with cover effect-->
@@ -949,19 +963,24 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
       <div class="toolbar toolbar-bottom tabbar-icons">
         <div class="toolbar-inner">
           <a href="#view-home" class="tab-link tab-link-active">
-            <i class="icon f7-icons if-not-md">house_fill</i>
-            <i class="icon material-icons if-md">home</i>
+            <i class="icon f7-icons if-not-md" style="font-size:larger;">house_alt</i>
+            <i class="icon material-icons if-md">house_alt</i>
             <span class="tabbar-label">Home</span>
           </a>
           <a href="#view-catalog" class="tab-link">
-            <i class="icon f7-icons if-not-md">square_list_fill</i>
-            <i class="icon material-icons if-md">view_list</i>
-            <span class="tabbar-label">Catalog</span>
+            <i class="icon f7-icons if-not-md" style="font-size:larger;">heart_fill</i>
+            <i class="icon material-icons if-md">heart_fill</i>
+            <span class="tabbar-label">Favorite</span>
           </a>
-          <a href="#view-settings" class="tab-link">
-            <i class="icon f7-icons if-not-md">gear</i>
-            <i class="icon material-icons if-md">settings</i>
-            <span class="tabbar-label">Settings</span>
+          <a href="#view-download" class="tab-link">
+            <i class="icon f7-icons if-not-md" style="font-size:larger;">music_albums</i>
+            <i class="icon material-icons if-md">music_albums</i>
+            <span class="tabbar-label">List Download</span>
+          </a>
+          <a href="#view-recent" class="tab-link" >
+            <i class="icon f7-icons if-not-md" style="font-size:larger;">doc_on_doc</i>
+            <i class="icon material-icons if-md">doc_on_doc</i>
+            <span class="tabbar-label">Recent View</span>
           </a>
         </div>
       </div>
@@ -976,6 +995,10 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
         <!-- Catalog page will be loaded here dynamically from /catalog/ route -->
       </div>
 
+      <!-- Settings View -->
+      <div id="view-download" class="view view-init tab" data-name="download" data-url="/download/">
+        <!-- Settings page will be loaded here dynamically from /settings/ route -->
+      </div>
       <!-- Settings View -->
       <div id="view-settings" class="view view-init tab" data-name="settings" data-url="/settings/">
         <!-- Settings page will be loaded here dynamically from /settings/ route -->
@@ -1051,4 +1074,4 @@ ${o.toString()}`)}return s&&(typeof s=="string"?l+=`?${s}`:Object.keys(s).length
     </div>
 
   </div>
-`}}dn.id="0e93641fc0";var tf=new ze({name:"BlockChord",theme:"auto",el:"#app",component:dn,store:Eu,routes:yu});
+`}}dn.id="07fa724979";var tf=new ze({name:"BlockChord",theme:"auto",el:"#app",component:dn,store:Eu,routes:yu});
