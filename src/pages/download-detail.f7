@@ -1,0 +1,54 @@
+<template>
+  <div class="page" data-name="detail">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Download</div>
+      </div>
+    </div>
+    <div class="page-content" style="padding: 16px;margin-top:15px">
+      <div id="detail-download">
+        <p>Loading...</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import {
+    getLirikById
+  } from '../js/db.js';
+
+  export default (props, {
+    $f7,
+    $on,
+    $f7route,
+    $app
+  }) => {
+    $on('page:init', async (e, page) => {
+      const id = $f7route.params.id
+      // const id = page.route.params.id; // ambil id dari route
+      console.log('ID Lagu  Download', id);
+      const data = await getLirikById(id);
+      const container = document.getElementById('detail-download');
+
+      if (data) {
+        console.log(data);
+        container.innerHTML = `
+          <h2>${data.judul}</h2>
+          <p><strong>Penyanyi : ${data.artis}</strong></p>
+          <pre>${data.lirik}</pre>
+        `;
+      } else {
+        container.innerHTML = `<p>Data tidak ditemukan</p>`;
+      }
+    });
+    return $render;
+  };
+</script>

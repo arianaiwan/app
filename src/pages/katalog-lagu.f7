@@ -1,0 +1,86 @@
+<template>
+    <div class="page" data-name="katalog-lagu">
+        <!-- Top Navbar -->
+        <div class="navbar navbar-large">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a class="link back">
+                        <i class="icon icon-back"></i>
+                        <span class="if-not-md">Back</span>
+                    </a>
+                </div>
+                <div class="title">Katalog Lagu</div>
+                <div class="title-large">
+                    <div class="title-large-text">Katalog Lagu</div>
+                </div>
+            </div>
+        </div>
+        <!-- Toolbar-->
+        <div class="toolbar toolbar-bottom">
+            <div class="toolbar-inner">
+                <a href="#" class="link">Left Link</a>
+                <a href="#" class="link">Right Link</a>
+            </div>
+        </div>
+        <!-- Scrollable page content-->
+        <div class="page-content">
+            <div class="list list-strong inset list-dividers-ios components-list searchbar-found">
+                <ul id="katalog"></ul>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+    export default (props, {
+        $f7,
+        $on,
+        $f7route
+
+    }) => {
+
+        // Event saat halaman di-inisialisasi (pertama kali dibuka)
+        $on('page:init', () => {
+            const artis = $f7route.params.artis;
+            console.log('👉 page:init → Halaman Home dimuat');
+            fetch('https://blockchord.my.id/mobile-api/lirik')
+                .then(res => res.json())
+                .then(json => {
+                    console.log('✅ Data yang diterima :', json.data);
+                    const katalog = json.data.filter(item => item.artis === artis);
+                    console.log('✅ Data yang di filter :', katalog);
+                    const container = document.getElementById('katalog');
+                    container.innerHTML = katalog.map(item =>
+                        `<li>
+                            <a class="item-content item-link" 
+                            href="/detail/${item.id}/">
+                            <div class="item-media">
+                                <i class="icon icon-f7"></i>
+                            </div>
+                            <div class="item-inner">
+                                <div class="item-title">${item.judul}</div>
+                            </div>
+                            </a>
+                        </li>`
+                    ).join('');
+
+                    // Lalu tampilkan ke halaman jika perlu
+                })
+                .catch(err => {
+                    console.error('❌ Gagal ambil data:', err);
+                });
+        });
+
+        // Event saat halaman akan ditampilkan
+        $on('page:beforein', () => {
+            console.log('👉 page:beforein → Halaman Home akan tampil');
+        });
+
+        // Event saat halaman sudah ditampilkan
+        $on('page:afterin', () => {
+            console.log('👉 page:afterin → Halaman Home telah tampil');
+        });
+
+        return $render;
+    }
+</script>

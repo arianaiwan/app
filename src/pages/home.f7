@@ -1,0 +1,344 @@
+<template>
+  <div class="page" data-name="home">
+    <!-- Top Navbar -->
+    <div class="navbar navbar-large">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner">
+        <div class="left">
+          <a href="#" class="link icon-only panel-open" data-panel="left">
+            <i class="icon f7-icons if-not-md">menu</i>
+            <i class="icon material-icons if-md">menu</i>
+          </a>
+        </div>
+        <div class="title sliding">Chord Kita</div>
+        <div class="title-large">
+          <div class="title-large-text">Chord Kita</div>
+        </div>
+        <div class="right">
+          <!-- Searchbar Toggle Button -->
+          <a class="link icon-only searchbar-enable" data-searchbar=".searchbar-expandable">
+            <i class="icon f7-icons">search</i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tabs Toolbar -->
+    <div class="toolbar toolbar-bottom tabbar">
+      <div class="toolbar-inner">
+        <a href="#tab-1" class="tab-link tab-link-active"><i class="material-icons">home</i></a>
+        <a href="#tab-2" class="tab-link"><i class="material-icons">access_alarm</i></a>
+        <a href="#tab-3" class="tab-link"><i class="material-icons">collections</i></a>
+      </div>
+    </div>
+
+    <!-- Animated Tabs -->
+    <div class="tabs tabs-animated-wrap">
+      <!-- Tab 1 -->
+      <!-- Component Songbook -->
+      <div id="tab-1" class="tab tab-active">
+        <div class="page-content">
+          <div class="block-title">Buku Lagu Pilihan</div>
+          <div class="block" id="song-book">
+          </div>
+          <!-- Componen slide -->
+          <div class="block">
+            <swiper-container pagination class="demo-swiper-multiple" space-between="10" slides-per-view="3">
+              <swiper-slide>
+                <img src="https://blockchord.my.id/assets/img/st12.jpg" alt="ST12"
+                  style="width: 100%; border-radius: 8px;" />
+
+              </swiper-slide>
+              <swiper-slide>
+                <img src="https://blockchord.my.id/assets/img/shaggydog.jpg" alt="shaggydog"
+                  style="width: 100%; border-radius: 8px;" />
+
+              </swiper-slide>
+              <swiper-slide>
+                <img src="https://blockchord.my.id/assets/img/sid.jpg" alt="sid"
+                  style="width: 100%; border-radius: 8px;" />
+
+              </swiper-slide>
+              <swiper-slide>
+                <img src="https://blockchord.my.id/assets/img/armada.jpg" alt="armada"
+                  style="width: 100%; border-radius: 8px;" />
+
+              </swiper-slide>
+              <swiper-slide>
+                <img src="https://blockchord.my.id/assets/img/dewa19.jpg" alt="dewa19"
+                  style="width: 100%; border-radius: 8px;" />
+
+              </swiper-slide>
+            </swiper-container>
+
+            <div class="block-title">List Artis Yang Band</div>
+            <div class="list list-outline-ios list-strong-ios list-dividers-ios">
+              <ul id="artis"></ul>
+            </div>
+            <!-- daftar lirik -->
+            <div class="block-title">List Lagu Terbaru </div>
+            <div class="list list-outline-ios list-strong-ios list-dividers-ios">
+              <ul id="disini"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <!-- Tab 3 -->
+      <div id="tab-3" class="tab">
+        <div class="page-content">
+          <div class="block">
+            <div class="list list-strong inset list-dividers-ios components-list">
+              <ul id="daftar-favorit"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import {
+    addLirik,
+    getAllLirik,
+    getAllRecentView
+  } from '../js/db.js';
+  export default (props, {
+    $on
+  }) => {
+    $on('page:init', () => {
+      const tab1 = document.getElementById('tab-1');
+      const tab2 = document.getElementById('view-catalog');
+      const tab3 = document.getElementById('tab-3');
+      // Tab 1
+      tab1.addEventListener('tab:show', () => {
+        console.log('📌 Tab 1 aktif');
+        // misalnya load data dari IndexedDB
+      });
+
+      tab3.addEventListener('tab:show', async () => {
+        console.log('📌 Tab 3 aktif');
+        const data = await getAllLirik();
+        console.log(data);
+        const ul = document.getElementById('daftar-favorite');
+        ul.innerHTML = data.map(item => `
+          <li>
+            <a href="/detail/${item.id}/" class="item-content item-link">
+              <div class="item-media"><i class="icon f7-icons">music_note</i></div>
+              <div class="item-inner">
+                <div class="item-title">${item.artis} - ${item.judul}</div>
+              </div>
+            </a>
+          </li>
+        `).join('');
+      });
+
+
+
+      console.log('👉 page:init → Halaman Home dimuat');
+      tampilkanLirik();
+      tampilkanaArtis();
+      songBook();
+
+    });
+
+    $on('page:afterin', () => {
+      // Tambah event listener saat Tab 3 tampil
+      const tab3 = document.querySelector('#tab-3');
+      tab3.addEventListener('tab:show', async () => {
+        console.log('📌 Tab Favorit aktif');
+        const data = await getAllLirik();
+        console.log(data);
+        const ul = document.getElementById('daftar-favorit');
+        ul.innerHTML = data.map(item => `
+        <li>
+          <a href="/detail/${item.id}/" class="item-content item-link">
+            <div class="item-media"><i class="icon f7-icons">music_note</i></div>
+            <div class="item-inner">
+              <div class="item-title">${item.artis} - ${item.judul}</div>
+            </div>
+          </a>
+        </li>
+      `).join('');
+      });
+    });
+
+    return $render;
+  }
+  
+  async function songBook() {
+    const res = await fetch('https://blockchord.my.id/mobile-api/songbook');
+    const data = await res.json();
+    const container = document.getElementById('song-book');
+    container.innerHTML = data.data.map(item => `    
+            <div class="item">             
+              <div class="ph"><img src="https://blockchord.my.id/assets/img/${item.img}"/></div>
+              <div class="info">
+                <!-- Kolom 2 -->
+                 <a class="" href="/songbook/${item.id}/" >
+                <div class="judul">${item.judul}</div>
+                <div class="ket">${item.ket}</div>
+                </a>
+              </div>               
+            </div>           
+  `).join('');
+  }
+
+  async function tampilkanLirik() {
+    const res = await fetch('https://blockchord.my.id/mobile-api/lirik');
+    const data = await res.json();
+    const container = document.getElementById('disini');
+    container.innerHTML = data.data.map(item => `
+     <li>
+          <a class="item-link item-content" href="/detail/${item.id}/" >
+            <div class="item-media"><i class="icon icon-f7"></i></div>
+            <div class="item-inner">
+             <div class="item-title">${item.judul}</div>
+              <div class="item-after">${item.artis}</div>
+            </div>
+          </a>
+        </li>
+  `).join('');
+  }
+  async function tampilkanLirik2() {
+    const res = await fetch('https://blockchord.my.id/mobile-api/lirik');
+    const data = await res.json();
+    const container = document.getElementById('daftar');
+    container.innerHTML = data.data.map(item => `
+    <li>
+      <a class="item-content item-link" href="/detail/${item.id}/">
+        <div class="item-media"><i class="icon icon-f7"></i></div>
+        <div class="item-inner"><div class="item-title">${item.judul}</div></div>
+      </a>
+    </li>
+  `).join('');
+  }
+
+
+  async function tampilkanaArtis() {
+    fetch('https://blockchord.my.id/mobile-api/artis')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('artis');
+        container.innerHTML = data.data.map(item => `  
+             <li>
+          <a class="item-link item-content" href="/katalog-lagu/${item.artis}/" >
+            <div class="item-media"><i class="icon icon-f7"></i></div>
+            <div class="item-inner">
+             <div class="item-title">${item.artis}</div>
+              <div class="item-after"></div>
+            </div>
+          </a>
+        </li>`).join('');
+      })
+      .catch(err => console.error('❌ Gagal ambil data artis:', err));
+  }
+
+  async function tampilRecentView() {
+    fetch('https://blockchord.my.id/mobile-api/artis')
+      .then(res => res.json())
+      .then(data => {
+        const container = document.getElementById('artis');
+        container.innerHTML = data.data.map(item =>
+          `  <li><a  href="/katalog-lagu/${item.artis}/">${item.artis}</a></li>`
+        ).join('');
+
+      })
+      .catch(err => console.error('❌ Gagal ambil data artis:', err));
+  }
+</script>
+
+<style>
+  /* Hilangkan efek abu-abu saat tap di iPhone */
+  html,
+  body {
+    background-color: #ffffff !important;
+    height: 100%;
+  }
+
+  html,
+  body,
+  .page,
+  .view,
+  .view-main,
+  .page-content,
+  .tabs,
+  .tab {
+    background-color: #ffffff !important;
+    min-height: 100%;
+    height: 100%;
+  }
+
+
+  swiper-slide {
+    height: 100px;
+    position: relative;
+    overflow: hidden;
+  }
+
+
+  swiper-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  #song-book {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+  }
+
+
+
+  #song-book .item {
+    padding: 0px;
+    display: flex;
+    box-sizing: border-box;
+    gap: 10px;
+
+    border-radius: 8px;
+    align-items: center;
+    width: calc(50% - 8px);
+  }
+
+  .ph {
+    width: 40px;
+    height: 40px;
+    background-color: black;
+    border-radius: 8px;
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .ph img {
+    object-fit: cover;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: left;
+  }
+
+  .judul {
+    color: #1B1B1F;
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .ket {
+    font-size: 14px;
+    color: #555;
+  }
+</style>

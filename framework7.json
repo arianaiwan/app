@@ -1,0 +1,18 @@
+{
+  "cwd": "D:\\My App\\BlockChord",
+  "type": [
+    "web"
+  ],
+  "name": "BlockChord",
+  "framework": "core",
+  "template": "tabs",
+  "bundler": "vite",
+  "cssPreProcessor": false,
+  "theming": {
+    "customColor": false,
+    "color": "#007aff",
+    "darkMode": false,
+    "iconFonts": true
+  },
+  "customBuild": false
+}

@@ -1,0 +1,69 @@
+<template>
+  <div class="page" data-name="download">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Download</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block-title">Hasil Download Kamu </div>
+      <div class="list list-outline-ios list-strong-ios list-dividers-ios">
+        <ul id="daftar-download"></ul>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+  import {
+    addLirik,
+    getAllLirik,
+    getAllRecentView
+  } from '../js/db.js';
+
+  export default (props, {
+    $on
+  }) => {
+    const tab3 = document.getElementById('view-download');
+    $on('page:init', () => {
+      tab3.addEventListener('tab:show', async () => {
+        console.log('📌 Tab 3 aktif');
+        const dataR = await getAllLirik();
+        console.log('🔁 Recent view:', dataR);
+        const ul = document.getElementById('daftar-download');
+        ul.innerHTML = dataR.map(item => `
+        <li>
+          <a class="item-link item-content" href="/download-detail/${item.id}/" >
+            <div class="item-media"><i class="icon icon-f7"></i></div>
+            <div class="item-inner">
+             <div class="item-title">${item.judul}</div>
+              <div class="item-after">${item.artis}</div>
+            </div>
+          </a>
+        </li>
+        `).join('');
+      });
+
+    })
+
+
+
+
+    return $render;
+  }
+  // Menghiangkan warning fokus di halaman sebelunya
+  document.addEventListener('click', e => {
+  if (e.target.closest('a.item-link')) {
+    // Hilangkan fokus supaya tidak di dalam aria-hidden
+    document.activeElement.blur();
+  }
+}, true);
+
+</script>

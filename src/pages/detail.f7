@@ -1,0 +1,217 @@
+<template>
+  <div class="page" data-name="detail">
+    <!-- Top Navbar -->
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon f7-icons if-not-md">arrow_left</i>
+            <i class="icon material-icons if-md">arrow_back</i>
+            <span class="if-not-md">Kembali</span>
+          </a>
+        </div>
+        <div class="title">Detail Lirik</div>
+      </div>
+    </div>
+
+    <!-- Scrollable page content-->
+    <div class="page-content">
+      <div class="block">
+        <div class="segmented segmented-strong">
+          <button class="button speed-button active" data-speed="slow">Lambat</button>
+          <button class="button speed-button" data-speed="normal">Normal</button>
+          <button class="button speed-button" data-speed="fast">Cepat</button>
+        </div>
+      </div>
+
+
+      <div id="contentku">
+        <div id="detail-lirik" class="block">
+
+        </div>
+
+      </div>
+
+    </div>
+    <!-- Floating Action Button -->
+    <!-- Floating Action Button (FAB) with Speed Dial -->
+    <div class="fab fab-right-bottom">
+      <a class="fab-button fab-button-opened">
+        <i class="icon f7-icons if-not-md">plus</i>
+        <i class="icon material-icons if-md">add</i>
+      </a>
+      <div class="fab-buttons fab-buttons-top">
+        <a href="#" class="fab-favorit">
+          <i class="icon f7-icons if-not-md">heart</i>
+          <i class="icon material-icons if-md">favorite</i>
+        </a>
+        <a href="#" class="fab-scroll">
+          <i class="icon f7-icons if-not-md">arrow_down</i>
+          <i class="icon material-icons if-md">south</i>
+        </a>
+      </div>
+    </div>
+
+
+
+  </div>
+</template>
+<style>
+  #contentku {
+    max-height: calc(100vh - 150px);
+    /* cukup ruang untuk navbar dan FAB */
+    overflow-y: auto;
+    padding: 16px;
+  }
+
+  .segmented {
+    border-radius: 0px;
+    margin-top: 5px;
+  }
+
+  .segmented-strong .button {
+    font-size: 14px;
+    padding: 8px 12px;
+
+  }
+</style>
+<script>
+  import {
+    addLirik,
+    initDB,
+    getAllLirik,
+    addRecentView
+  } from '../js/db.js'; // sesuaikan path relatifnya
+
+
+  export default (props, {
+    $f7,
+    $on,
+    $f7route,
+    $app
+
+  }) => {
+    const id = $f7route.params.id
+    let dataLagu = {};
+    let recentData = {};
+    // Event saat halaman di-inisialisasi (pertama kali dibuka)
+    $on('page:init', () => {
+      console.log('👉 page:init → Halaman Home telah tampil' + id);
+      fetch('https://blockchord.my.id/mobile-api/lirik')
+        .then(res => res.json())
+        .then(json => {
+          const items = json.data;
+          const item = items.find(item => item.id == id);
+          console.log(item);
+          dataLagu = item;
+          const recentData = {
+            id: item.id,
+            judul: item.judul,
+            artis: item.artis
+          };
+          addRecentView(recentData);
+          console.log('Test ID Recent', recentData);
+          if (item) {
+            console.log(item);
+            const container = document.getElementById('detail-lirik');
+            container.innerHTML = `
+            <h3>${item.artis} - ${item.judul} Chord Mudah</h3><br>
+              <pre>
+              ${item.lirik}
+              </pre>
+            `;
+          }
+          console.log('✅ Data diterima:', json);
+        })
+        .catch(err => {
+          console.error('❌ Gagal ambil data:', err);
+        });
+
+
+    });
+
+    // Event saat halaman akan ditampilkan
+    $on('page:beforein', () => {
+      console.log('👉 page:beforein → Halaman Home akan tampil');
+
+    });
+
+    $on('page:afterin', () => {
+      const favBtn = document.querySelector('.fab-favorit');
+      favBtn.addEventListener('click', async () => {
+        const db = await initDB();
+        addLirik(dataLagu);
+        $f7.dialog.alert('✅ Lirik berhasil disimpan ke favorit!', 'Berhasil');
+      });
+
+      let scrollInterval = null;
+      let currentSpeed = 'slow'; // default speed
+
+      const scrollBtn = document.querySelector('.fab-scroll');
+      const speedButtons = document.querySelectorAll('.speed-button');
+
+      speedButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Update UI: beri class active
+          speedButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentSpeed = btn.dataset.speed;
+        });
+      });
+
+      scrollBtn.addEventListener('click', () => {
+        const pageContent = document.querySelector('#contentku');
+        const icon = scrollBtn.querySelector('.icon');
+
+        if (scrollInterval) {
+          clearInterval(scrollInterval);
+          scrollInterval = null;
+          icon.innerText = 'south';
+          console.log('⏹️ Auto scroll dihentikan');
+          return;
+        }
+
+        // Tentukan kecepatan berdasarkan tombol aktif
+        let delay = 30;
+        let step = 1.5;
+
+        switch (currentSpeed) {
+          case 'slow':
+            delay = 150;
+            step = 1;
+            break;
+          case 'normal':
+            delay = 100;
+            step = 1.5;
+            break;
+          case 'fast':
+            delay = 100;
+            step = 2.5;
+            break;
+        }
+
+        scrollInterval = setInterval(() => {
+          if ((pageContent.scrollTop + pageContent.clientHeight) >= pageContent.scrollHeight) {
+            clearInterval(scrollInterval);
+            scrollInterval = null;
+            icon.innerText = 'south';
+            console.log('✅ Sampai akhir');
+            return;
+          }
+          pageContent.scrollTop += step;
+        }, delay);
+
+        icon.innerText = 'pause';
+        console.log(`▶️ Auto scroll mulai [${currentSpeed}]`);
+      });
+
+
+    });
+
+
+    return $render;
+
+
+  }
+</script>

@@ -1,0 +1,57 @@
+<template>
+  <div class="page" data-name="favorite">
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title">Favorite</div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block-title">Mixed yang Difavoritkan</div>
+      <div class="list list-outline-ios list-strong-ios list-dividers-ios">
+        <ul id="daftar-favorite"></ul>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  import {
+    getAllLirik  
+  } from '../js/db.js';
+
+  export default (props, {
+    $on
+  }) => {
+    const tab2 = document.getElementById('view-catalog');
+    $on('page:init', () => {
+      tab2.addEventListener('tab:show', async () => {
+        console.log('📌 Tab 2 aktif');
+        const dataR = await getAllLirik();
+        console.log('🔁 Recent view:', dataR);
+        const ul = document.getElementById('daftar-favorite');
+        ul.innerHTML = dataR.map(item => `        <li>
+          <a class="item-link item-content" href="/detail/${item.id}/" >
+            <div class="item-media"><i class="icon icon-f7"></i></div>
+            <div class="item-inner">
+             <div class="item-title">${item.judul}</div>
+              <div class="item-after">${item.artis}</div>
+            </div>
+          </a>
+        </li>
+        `).join('');
+      });
+
+    })
+
+
+
+
+    return $render;
+  }
+</script>

@@ -1,0 +1,58 @@
+<template>
+    <div class="page" data-name="songbook">
+        <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+                <div class="left">
+                    <a href="#" class="link back">
+                        <i class="icon f7-icons if-not-md">arrow_left</i>
+                        <i class="icon material-icons if-md">arrow_back</i>
+                        <span class="if-not-md">Kembali</span>
+                    </a>
+                </div>
+                <div class="title">Song Book</div>
+
+            </div>
+        </div>
+        <div class="page-content">
+            <div class="block-title" id="judulSongBook"></div>
+            <div class="list list-outline-ios list-strong-ios list-dividers-ios">
+                <ul id="detailsongbook">
+
+                </ul>
+            </div>
+
+
+        </div>
+    </div>
+</template>
+<script>
+    export default (props, {
+        $on,
+        $f7route
+    }) => {
+        const id = $f7route.params.id;
+        $on('page:init', async () => {
+            songBookList(id);
+        });
+        return $render;
+    }
+    async function songBookList(id) {
+        const res = await fetch(`https://blockchord.my.id/mobile-api/songbooklist/${id}`);
+        const data = await res.json();
+        const container = document.getElementById('detailsongbook');
+        const judulSongBook = document.getElementById('judulSongBook');
+        judulSongBook.innerText = data.songbookname;
+        container.innerHTML = data.data.map(item => `    
+         <li>
+          <a class="item-link item-content" href="/detail/${item.id}/" >
+            <div class="item-media"><i class="icon icon-f7"></i></div>
+            <div class="item-inner">
+             <div class="item-title">${item.judul}</div>
+              <div class="item-after">${item.artis}</div>
+            </div>
+          </a>
+        </li>           
+  `).join('');
+    }
+</script>
